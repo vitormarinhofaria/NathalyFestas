@@ -1,0 +1,115 @@
+﻿@if (Pedido is not null)
+{
+    <div class="d-flex flex-column justify-content-center align-items-center w-auto">
+        <h1>Nathaly Festas</h1>
+        <div class="d-flex flex-row border-bottom border-dark">
+            Telefone/WhatsApp: (31) 9-9209-1986
+        </div>
+
+        <div class="container-fluid m-5">
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-2 border-bottom border-top border-right border-dark font-weight-bold border-left">NOME:</div>
+                <div class="col-4 border-bottom border-top border-right border-dark">@Pedido.Cliente.Nome</div>
+                <div class="col-1 border-bottom border-top border-right border-dark font-weight-bold">EMAIL:</div>
+                <div class="col-3 border-bottom border-top border-right border-dark">@Pedido.Cliente.Email</div>
+                <div class="col-1"></div>
+            </div>
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-2 border-bottom border-right border-dark font-weight-bold border-left">CPF:</div>
+                <div class="col-4 border-bottom border-right border-dark">@Pedido.Cliente.CPF</div>
+                <div class="col-1 border-bottom border-right border-dark font-weight-bold">Telefone</div>
+                <div class="col-3 border-bottom border-right border-dark">@Pedido.Cliente.Telefone</div>
+                <div class="col-1"></div>
+            </div>
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-2 border-bottom border-right border-dark font-weight-bold border-left">ENDEREÇO:</div>
+                <div class="col-4 border-bottom border-right border-dark">@Pedido.Endereco.Rua</div>
+                <div class="col-1 border-bottom border-right border-dark font-weight-bold">BAIRRO:</div>
+                <div class="col-3 border-bottom border-right border-dark">@Pedido.Endereco.Bairro</div>
+                <div class="col-1"></div>
+            </div>
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-2 border-bottom border-right border-dark font-weight-bold border-left">ENTREGA:</div>
+                <div class="col-2 border-bottom border-right border-dark">@Pedido.DataEntrega.ToShortDateString()</div>
+                <div class="col-2 border-bottom border-right border-dark font-weight-bold">RECOLHA:</div>
+                <div class="col-4 border-bottom border-right border-dark">@Pedido.DataRecolha.ToShortDateString()</div>
+                <div class="col-1"></div>
+            </div>
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10 border-left border-right border-bottom border-dark" style="height: 2rem"></div>
+                <div class="col-1"></div>
+            </div>
+            <div class="row text-center">
+                <div class="col-1"></div>
+                <div class="col-1 border-bottom border-right border-dark font-weight-bold border-left">Quant.</div>
+                <div class="col-1 border-bottom border-right border-dark font-weight-bold">Unidade</div>
+                <div class="col-4 border-bottom border-right border-dark font-weight-bold">Item</div>
+                <div class="col-2 border-bottom border-right border-dark font-weight-bold">R$ Unitário</div>
+                <div class="col-2 border-bottom border-right border-dark font-weight-bold">R$ Total</div>
+                <div class="col-1"></div>
+            </div>
+            <div class="row text-center">
+                @foreach (var mat in Pedido.Materiais)
+                {
+                    <div class="col-1"></div>
+                    <div class="col-1 border-bottom border-right border-dark border-left">@mat.Quantidade</div>
+                    <div class="col-1 border-bottom border-right border-dark">@mat.UnidadeString()</div>
+                    <div class="col-4 border-bottom border-right border-dark">@mat.Nome</div>
+                    <div class="col-2 border-bottom border-right border-dark">R$@mat.Preco</div>
+                    <div class="col-2 border-bottom border-right border-dark">R$@(mat.Preco * mat.Quantidade)</div>
+                    <div class="col-1"></div>
+                }
+            </div>
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10 border-left border-right border-bottom border-dark" style="height: 1rem"></div>
+                <div class="col-1"></div>
+            </div>
+            <div class="row text-center">
+                <div class="col-1"></div>
+                <div class="col-6 border-bottom border-right border-dark border-left"></div>
+                <div class="col-2 border-bottom border-right border-dark font-weight-bold">Valor a Pagar:</div>
+                <div class="col-2 border-bottom border-right border-dark">R$@Pedido.ValorTotal()</div>
+                <div class="col-1"></div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10"><b>TENDO FEITO A LOCAÇÃO DO MATERIAL ACIMA DISCRIMINADO, O CLIENTE SE RESPONSABILIZA POR:</b></div>
+                <div class="col-1"></div>
+            </div>
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10">* Devolvê-lo no dia marcado sob pena de pagar outra taxa de aluguel por dia de atraso;</div>
+                <div class="col-1"></div>
+            </div>
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10">* Conferí-lo na entrega e devolução <b>(não serão aceitas reclamações após o uso)</b>;</div>
+                <div class="col-1"></div>
+            </div>
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10">* Pagar qualquer dano ou perda que ocorrer com o material sobre sua responsabilidade;</div>
+                <div class="col-1"></div>
+            </div>
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10">* Toalhas rasgadas, mofadas, com vela ou fita adesiva, será avaliado o valor à ser cobrado;</div>
+                <div class="col-1"></div>
+            </div>
+        </div>
+
+    </div>
+}
+
+@code {
+    [Parameter]
+    public Pedido Pedido { get; set; }
+}

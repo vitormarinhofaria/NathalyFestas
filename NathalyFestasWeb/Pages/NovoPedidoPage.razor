@@ -1,0 +1,134 @@
+﻿@page "/pedido/create"
+@page "/pedido/edit/{IdPedido}"
+
+@if (Pedido is not null)
+{
+
+    <div class="d-flex flex-column">
+        <div class="d-flex flex-column text-center p-3 border-bottom border-primary justify-content-center">
+            <label>Nome</label>
+            <input @bind="@Pedido.Cliente.Nome" class="form-control w-100" type="text" />
+            <span class="border-bottom border-secondary m-1"></span>
+            <label>Email</label>
+            <input @bind="@Pedido.Cliente.Email" class="form-control w-100" type="email" />
+            <span class="border-bottom border-secondary m-1"></span>
+            <label>Telefone</label>
+            <input @bind="@Pedido.Cliente.Telefone" class="form-control w-100" type="tel" />
+            <span class="border-bottom border-secondary m-1"></span>
+            <label>CPF/RG</label>
+            <input @bind="@Pedido.Cliente.CPF" class="form-control w-100" type="text" />
+            <span class="border-bottom border-secondary m-1"></span>
+        </div>
+        <div class="d-flex flex-column text-center p-3 border-bottom border-primary justify-content-center">
+            <label>Endereço</label>
+            <input @bind="@Pedido.Endereco.Rua" class="form-control w-100" type="text" />
+            <span class="border-bottom border-secondary m-1"></span>
+            <label>Bairro</label>
+            <input @bind="@Pedido.Endereco.Bairro" class="form-control w-100" type="text" />
+            <span class="border-bottom border-secondary m-1"></span>
+        </div>
+        <div class="d-flex flex-column text-center p-3 border-bottom border-primary justify-content-center">
+            <label>Data Entrega/Busca</label>
+            <input type="date" @bind="@Pedido.DataEntrega" class="form-control w-100" />
+            <span class="border-bottom border-secondary m-1"></span>
+            <label>Data da Devolução/Recolha</label>
+            <input type="date" @bind="@Pedido.DataRecolha" class="form-control w-100" />
+            <span class="border-bottom border-secondary m-1"></span>
+        </div>
+        <div class="container-fluid p-3 ml-3 w-100">
+            <div class="row justify-content-between w-100 text-center tableBorderTop">
+                <label class="border-0 m-0 p-0 col tableItem tableLeft">Qtd.</label>
+                <label class="border-0 m-0 p-0 col tableItem">Un.</label>
+                <label class="border-0 m-0 p-0 col-5 tableItemName">Item</label>
+                <label class="border-0 m-0 p-0 col-2 tableItem tableItemBigger">R$</label>
+                <label class="border-0 m-0 p-0 col-2 tableItem tableItemBigger">Total</label>
+            </div>
+            @foreach (var mat in Pedido.Materiais)
+            {
+                var precoTotal = mat.Preco * mat.Quantidade;
+                <div class="row justify-content-between w-100 text-center">
+                    <label class="border-0 m-0 p-0 col tableItem tableLeft">@mat.Quantidade</label>
+                    <label class="border-0 m-0 p-0 col tableItem">@mat.UnidadeString()</label>
+                    <label class="border-0 m-0 p-0 col-5 tableItemName">@mat.Nome </label>
+                    <label class="border-0 m-0 p-0 col-2 tableItem tableItemBigger">@mat.Preco</label>
+                    <label class="border-0 m-0 p-0 col-2 tableItem tableItemBigger">@precoTotal</label>
+                </div>
+            }
+            <div class="row justify-content-between w-100 text-center">
+                <label class="border-0 m-0 p-0 col tableItem tableLeft"></label>
+                <label class="border-0 m-0 p-0 col tableItem"></label>
+                <label class="border-0 m-0 p-0 col-5 tableItemName">Valor Total do Pedido (R$)</label>
+                <label class="border-0 m-0 p-0 col-2 tableItem tableItemBigger"></label>
+                <label class="border-0 m-0 p-0 col-2 tableItem tableItemBigger">@Pedido.ValorTotal()</label>
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center">
+                <button class="btn btn-danger p-2 m-2" @onclick="@ShowDeleteMaterial">Remover Item</button>
+                <button class="btn btn-success p-2 m-2" @onclick="@AddMaterial">Adicionar Item</button>
+            </div>
+        </div>
+        <div class="d-flex flex-column border-top border-primary">
+            <button class="btn btn-primary p-2 m-2" @onclick="@SalvarPedido">Salvar</button>
+            <button class="btn btn-outline-danger p-2 m-2" @onclick="@CancelEditNew">Cancelar</button>
+            <button class="btn btn-danger p-2 m-2" @onclick="@AskDeletePedido">Excluir</button>
+        </div>
+
+        @if (CurrentInsertMat is not null)
+        {
+            <div class="backgroundAddItem" hidden="@InsertPopUpHidden">
+                <div hidden="@InsertPopUpHidden" class="insertPopup p-4 rounded border border-info">
+                    <EditForm class="d-flex flex-column text-center" Model="@CurrentInsertMat">
+                        <label>Item</label>
+                        <input type="text" @bind="@CurrentInsertMat.Nome" class="form-control w-100" />
+                        <span class="border-bottom border-secondary m-1"></span>
+                        <label>Unidade</label>
+                        <InputSelect @bind-Value="@CurrentInsertMat.Unidade" class="form-control w-100">
+                            @foreach (var unidade in Enum.GetValues(typeof(Unidade)))
+                                    {
+                                <option value="@unidade">@unidade</option>
+                                    }
+                        </InputSelect>
+                        <span class="border-bottom border-secondary m-1"></span>
+                        <label>Quantidade</label>
+                        <input type="number" @bind="@CurrentInsertMat.Quantidade" class="form-control w-100" />
+                        <span class="border-bottom border-secondary m-1"></span>
+                        <label>Preço (R$)</label>
+                        <input type="number" @bind="@CurrentInsertMat.Preco" class="form-control w-100" />
+                        <span class="border-bottom border-secondary m-1"></span>
+                    </EditForm>
+                    <div class="d-flex flex-row">
+                        <button class="btn btn-outline-danger p-2 m-2" @onclick="@CancelInsert">Cancelar</button>
+                        <button class="btn btn-primary p-2 m-2" @onclick="@SaveInsert">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (Pedido.Materiais.Count > 0)
+        {
+            <div class="backgroundAddItem" hidden="@HideDeleteItem">
+                <div class="insertPopup p-4 rounded border border-info">
+                    @foreach (var mat in Pedido.Materiais)
+                    {
+                        <div @key="@mat" class="d-flex flex-row justify-content-start align-items-center border-bottom border-secondary m-1 p-1">
+                            <button class="btn btn-danger p-2 m-1" @onclick="() => { Pedido.Materiais.Remove(mat); HideDeleteItem = true; StateHasChanged(); }">X</button>
+                            <label>@mat.Quantidade | @mat.Nome</label>
+                        </div>
+                    }
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <button class="btn btn-warning" @onclick="() => { HideDeleteItem = true; }">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="backgroundAddItem" hidden="@HideDeleteConfirmation">
+            <div hidden="@HideDeleteConfirmation" class="insertPopup p-4 rounded border border-info">
+                <p>Tem certeza que deseja excluir o pedido de '@Pedido.Cliente.Nome'?</p>
+                <div class="d-flex flex-row">
+                    <button class="m-1 btn btn-outline-danger" @onclick="@CancelDeletion">Cancelar</button>
+                    <button class="m-1 btn btn-danger" @onclick="@ConfirmDeletion">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

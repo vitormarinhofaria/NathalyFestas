@@ -1,0 +1,12 @@
+﻿<div class="d-flex flex-column card justify-content-center align-items-center m-2 p-2 w-100">
+    <label>Cliente: @Pedido.Cliente.Nome</label>
+    <label>Entrega: @Pedido.DataEntrega.ToShortDateString() | Recolha: @Pedido.DataRecolha.ToShortDateString()</label>
+    <div class="d-flex flex-row">
+        <label>@Pedido.Endereco.ToString()</label>
+    </div>
+    <label>Valor: R$@Pedido.ValorTotal()</label>
+    <div class="d-flex flex-row">
+        <button class="btn btn-secondary p-1 m-1" @onclick:stopPropagation="true" @onclick="DownloadAsPdf">Salvar PDF</button>
+        <button class="btn btn-primary p-1 m-1" @onclick:stopPropagation="true" @onclick="EditPedido">Editar</button>
+    </div>
+</div>

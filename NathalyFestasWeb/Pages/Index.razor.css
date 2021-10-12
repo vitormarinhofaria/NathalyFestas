@@ -1,0 +1,22 @@
+﻿.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 110%;
+    height: 60px;
+    background: var(--primary);
+    z-index: 1000;
+}
+
+::placeholder {
+    color: white;
+    font-size: 14pt;
+}
+
+input {
+    background-color: var(--primary);
+    color: white;
+    font-size: 14pt;
+    border-bottom: 2px solid white;
+    border-radius: 4px;
+}

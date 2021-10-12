@@ -1,0 +1,41 @@
+﻿.tableItem {
+    /* width: 45px;*/
+    border-right: solid 1px black !important;
+    border-bottom: solid 1px black !important;
+}
+
+.tableBorderTop {
+    border-top: solid 1px black !important;
+}
+
+.tableLeft {
+    border-left: solid 1px black !important;
+}
+.tableItemName {
+    border-right: solid 1px black !important;
+    border-bottom: solid 1px black !important;
+    /*width: inherit;*/
+}
+.tableItemBigger {
+    /*width: 60px !important;*/
+}
+
+.insertPopup {
+    background-color: white;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    filter: none !important;
+    opacity: 1.0 !important;
+    z-index: 1000;
+}
+
+.backgroundAddItem {
+    backdrop-filter: blur(3px);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+}
