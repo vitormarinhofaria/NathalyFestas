@@ -28,7 +28,7 @@ namespace NathalyFestasWeb.Services
         }
         public PedidosRepository()
         {
-            mongoClient = new MongoClient("mongodb+srv://mainUser:echelon241@nathalyfestasdb.ldb74.mongodb.net/nathalyfestas?retryWrites=true&w=majority");
+            mongoClient = new MongoClient("mongodb+srv://user:senha@db.ldb74.mongodb.net/nathalyfestas?retryWrites=true&w=majority");
             mongoDatabase = mongoClient.GetDatabase("NathalyFestas");
             pedidosCollection = mongoDatabase.GetCollection<Pedido>("Pedidos");
         }
